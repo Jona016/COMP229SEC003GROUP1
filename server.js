@@ -1,6 +1,8 @@
 import config from './config/config.js' 
 import app from './server/express.js'
 import mongoose from 'mongoose' 
+import userRoutes from './routes/userRoutes.js';
+import incidentRoutes from './routes/incidentRoutes.js';
 mongoose.Promise = global.Promise
 mongoose.connect(config.mongoUri, { 
     //useNewUrlParser: true,
@@ -23,3 +25,8 @@ console.log(err)
 }
 console.info('Server started on port %s.', config.port) 
 })
+
+
+// Use routes
+app.use('/api/users', userRoutes);
+app.use('/api/incidents', incidentRoutes);
