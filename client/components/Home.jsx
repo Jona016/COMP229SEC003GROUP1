@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import LoginForm from '../pages/user/Login';
+import SignupForm from '../pages/user/Signup';
 import '../src/index.css';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -61,58 +63,5 @@ const Home = () => {
         </>
     );
 };
-
-const LoginForm = ({ onSignupLinkClick }) => {
-    return (
-        <div className="login-container">
-            <div className="card login-form">
-                <h2>Signin</h2>
-                <div className="form-group">
-                    <label htmlFor="email">Email Address:</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email address" />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" />
-                </div>
-
-                <button type="submit">Sigin</button>
-
-                <p>Don't have an Account? <span onClick={onSignupLinkClick}>Sign up</span></p>
-            </div>
-        </div>
-    );
-};
-
-const SignupForm = ({ onSigninLinkClick }) => {
-    return (
-        <div className="signup-container">
-            <div className="card signup-form">
-                <h2>Sign up</h2>
-                <div className="form-group">
-                    <label htmlFor="firstName">First Name:</label>
-                    <input type="firstName" id="firstName" name="firstName" placeholder="Enter your first name" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="lastName">Last Name:</label>
-                    <input type="lastName" id="lastName" name="lastName" placeholder="Enter your last name" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="email">Email Address:</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email address" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" />
-                </div>
-
-                <button type="submit">Sign up</button>
-                <p>Already have an Account? <span onClick={onSigninLinkClick}>Sign in</span></p>
-            </div>
-        </div>
-    );
-};
-
 
 export default Home;

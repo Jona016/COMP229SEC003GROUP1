@@ -79,4 +79,33 @@ async function getUser(req, res, next) {
   next();
 }
 
+// Login user
+router.post('/', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Check if the user with the provided email exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    // Compare the provided password with the hashed password in the database
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    // If the email and password are valid, generate a JWT token
+    const token = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: '1h' // Token expires in 1 hour
+    });
+
+    // Send the token back to the client
+    res.json({ token });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 export default router;
