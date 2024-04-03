@@ -15,13 +15,7 @@ export default function Layout() {
                         <Link to ="/"> <p>Incident Management System</p></Link>
                         {/* <button className='signin'>Sign In</button> */}
                     </div>    
-                </nav>
-
-                <footer>
-                    <div>
-                        <p>&copy; 2024 IMS. All Rights Reserved.</p>
-                    </div>
-                </footer>
+                </nav>               
             </div>
         </>  
     );
