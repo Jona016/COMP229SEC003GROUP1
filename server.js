@@ -1,8 +1,11 @@
+import dotenv from 'dotenv'
 import config from './config/config.js' 
 import app from './server/express.js'
 import mongoose from 'mongoose' 
 import userRoutes from './routes/userRoutes.js';
 import incidentRoutes from './routes/incidentRoutes.js';
+const dotenvconfig = dotenv.config();
+
 mongoose.Promise = global.Promise
 mongoose.connect(config.mongoUri, { 
     //useNewUrlParser: true,
@@ -11,7 +14,7 @@ mongoose.connect(config.mongoUri, {
 } ) 
 .then(() => {
     console.log("Connected to the database!");
-    })
+   })
     
 mongoose.connection.on('error', () => {
 throw new Error(`unable to connect to database: ${config.mongoUri}`) 

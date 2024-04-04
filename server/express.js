@@ -8,6 +8,7 @@ import Template from './../template.js'
 import path from 'path'
 
 const app = express()
+app.use(cors())
 const CURRENT_WORKING_DIR = process.cwd()
 //...
 app.get('/', (req, res) => {
@@ -20,5 +21,4 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(compress())
 app.use(helmet())
-app.use(cors())
 export default app

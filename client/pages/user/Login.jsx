@@ -17,26 +17,21 @@ const LoginForm = ({ onSignupLinkClick }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setError("")
         try {
-            const response = await fetch('/api/users', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
+            const response = await signin({ email, password });
 
-            if (!response.ok) {
+            if (!response) {
                 throw new Error('Failed to login');
             }
-
-            const data = await response.json();
-            const { token } = data;
+            
+            const { token } = response;
 
 
             auth.authenticate(token, () => {
                 console.log('User authenticated');
+
+            window.location.href = '/users'
 
             });
         } catch (error) {

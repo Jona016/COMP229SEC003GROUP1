@@ -2,8 +2,9 @@ import express from 'express';
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-
 const router = express.Router();
+import config from '../config/config.js';
+
 
 // Create a new user
 router.post('/', async (req, res) => {
@@ -80,9 +81,8 @@ async function getUser(req, res, next) {
 }
 
 // Login user
-router.post('/', async (req, res) => {
+router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-
   try {
     // Check if the user with the provided email exists
     const user = await User.findOne({ email });
@@ -97,7 +97,7 @@ router.post('/', async (req, res) => {
     }
 
     // If the email and password are valid, generate a JWT token
-    const token = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, {
+    const token = jwt.sign({ userId: user._id }, config.jwtSecret, {
       expiresIn: '1h' // Token expires in 1 hour
     });
 

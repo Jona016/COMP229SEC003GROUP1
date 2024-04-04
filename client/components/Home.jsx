@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate  } from 'react-router-dom';
 import LoginForm from '../pages/user/Login';
 import SignupForm from '../pages/user/Signup';
 import '../src/index.css';
@@ -21,26 +22,30 @@ const useStyles = makeStyles(theme => ({
 
 const Home = () => {
     const classes = useStyles();
+    const navigate = useNavigate();
     const [showLoginForm, setShowLoginForm] = useState(false);
     const [showSignupForm, setShowSignupForm] = useState(false);
 
     const handleReportButtonClick = () => {
         setShowLoginForm(true);
         setShowSignupForm(false);
+
     };
 
     const handleSignupLinkClick = () => {
         setShowLoginForm(false);
         setShowSignupForm(true);
+        console.log(handleSigninLinkClick, "clicked sign in")
     };
 
     const handleSigninLinkClick = () => {
         setShowLoginForm(true);
         setShowSignupForm(false);
+        console.log(handleSigninLinkClick, "clicked sign in")
     };
 
     return (
-        <>
+        <> 
             <div className='home'>
                 <div className="welcome-container">
                     {!showLoginForm && !showSignupForm ? (
@@ -60,8 +65,12 @@ const Home = () => {
                     )}
                 </div>
             </div>
+            
         </>
     );
 };
 
 export default Home;
+
+
+//redux - state management

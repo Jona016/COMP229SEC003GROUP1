@@ -7,7 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Icon from "@material-ui/core/Icon";
 import { makeStyles } from "@material-ui/core/styles";
-import { create as createIncident } from "./api-incident.js"; // Import incident management API functions
+import { create as createIncident } from "./api-incident.js"; 
 import { Link, Navigate, useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
