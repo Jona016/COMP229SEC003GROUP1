@@ -9,11 +9,7 @@ const config = {
 process.env.MONGO_HOST ||
  'mongodb://' + (process.env.IP || 'localhost') + ':' + 
 (process.env.MONGO_PORT || '27017') +
-<<<<<<< HEAD
- '/IMS' 
-=======
  '/ims' 
->>>>>>> 1995e192eb9903137c5f2022bf1b53663c49e2b4
  }
  export default config
 

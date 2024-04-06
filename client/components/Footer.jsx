@@ -10,8 +10,4 @@ export default function Footer() {
                 </footer>
         </>  
     );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 1995e192eb9903137c5f2022bf1b53663c49e2b4

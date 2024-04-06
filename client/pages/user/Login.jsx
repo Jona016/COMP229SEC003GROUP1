@@ -31,7 +31,7 @@ const LoginForm = ({ onSignupLinkClick }) => {
             auth.authenticate(token, () => {
                 console.log('User authenticated');
 
-            window.location.href = '/users'
+            window.location.href = '/incidents'
 
             });
         } catch (error) {

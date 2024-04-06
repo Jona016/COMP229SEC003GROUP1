@@ -82,7 +82,7 @@ export default function MyIncidents() {
     };
 
     if (redirectToSignin) {
-        return <Navigate to='/signin' />;
+        return <Navigate to='/incidents' />;
     }
 
     return (
@@ -107,7 +107,18 @@ export default function MyIncidents() {
                                         <Icon>info</Icon>
                                     </Avatar>
                                 </ListItemAvatar>
-                                <ListItemText primary={incident.title} secondary={incident.description} />
+                                <ListItemText 
+                                    primary={incident.title} 
+                                    secondary={
+                                        <React.Fragment>
+                                            <Typography component="span" variant="body2" color="textPrimary">
+                                                {incident.category} | {incident.prioritization}
+                                            </Typography>
+                                            <br />
+                                            {incident.description}
+                                        </React.Fragment>
+                                    } 
+                                />
                                 {auth.isAuthenticated().user && auth.isAuthenticated().user._id === incident.owner._id && (
                                     <ListItemSecondaryAction>
                                         <Link to={`/incidents/edit/${incident._id}`}>

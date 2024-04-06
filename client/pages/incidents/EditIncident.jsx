@@ -49,9 +49,12 @@ export default function EditIncident() {
     const params = useParams();
     const classes = useStyles();
     const [values, setValues] = useState({
+        name: "",
         title: "",
-        description: "",
+        category: "",
         severity: "",
+        description: "",
+        comments: "",
         status: "",
         redirect: false,
         error: "",
@@ -71,9 +74,12 @@ export default function EditIncident() {
             } else {
                 setValues({
                     ...values,
+                    name: data.name,
                     title: data.title,
+                    category: data.category,
+                    severity: severity,
                     description: data.description,
-                    severity: data.severity,
+                    comments: data.comments,
                     status: data.status,
                 });
             }
@@ -86,8 +92,12 @@ export default function EditIncident() {
 
     const clickSubmit = () => {
         const incidentData = {
+            name: values.name,
             title: values.title,
+            category: values.category,
+            severity: values.severity,
             description: values.description,
+            comments: values.comments,
             severity: values.severity,
             status: values.status,
         };
@@ -118,11 +128,38 @@ export default function EditIncident() {
                     </Typography>
                     <br />
                     <TextField
+                        id="name"
+                        label="Name"
+                        className={classes.textField}
+                        value={values.name}
+                        onChange={handleChange("name")}
+                        margin="normal"
+                    />
+                    <br />
+                    <TextField
                         id="title"
                         label="Title"
                         className={classes.textField}
                         value={values.title}
                         onChange={handleChange("title")}
+                        margin="normal"
+                    />
+                    <br />
+                    <TextField
+                        id="category"
+                        label="Category"
+                        className={classes.textField}
+                        value={values.category}
+                        onChange={handleChange("category")}
+                        margin="normal"
+                    />
+                    <br />
+                    <TextField
+                        id="severity"
+                        label="Severity"
+                        className={classes.textField}
+                        value={values.severity}
+                        onChange={handleChange("severity")}
                         margin="normal"
                     />
                     <br />
@@ -138,11 +175,13 @@ export default function EditIncident() {
                     />
                     <br />
                     <TextField
-                        id="severity"
-                        label="Severity"
+                        id="comments"
+                        label="Comments"
+                        multiline
+                        rows="3"
+                        value={values.comments}
+                        onChange={handleChange("comments")}
                         className={classes.textField}
-                        value={values.severity}
-                        onChange={handleChange("severity")}
                         margin="normal"
                     />
                     <br />

@@ -11,6 +11,7 @@ export default function UserLayout() {
             <nav>
                 <div className='userLayout_container'>
                     <Link to ="/"><img src = {Logo} alt = "Company Logo" className = "logo" width = "60px" height= "60px"/>  </Link>
+                    <Link to="/users/edit">Profile</Link>
                     <Link to ="/users"> <p>Users</p></Link>
                     {/* <button className='signin'>Sign In</button> */}
                 </div>    

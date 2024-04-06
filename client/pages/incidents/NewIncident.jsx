@@ -42,8 +42,11 @@ export default function NewIncident() {
     const classes = useStyles();
     const [values, setValues] = useState({
         name: "",
-        description: "",
+        category: "",
         severity: "",
+        description: "",
+        comments: "",
+        status: "",
         error: "",
         redirect: false,
     });
@@ -55,8 +58,11 @@ export default function NewIncident() {
     const clickSubmit = () => {
         const incidentData = {
             name: values.name,
-            description: values.description,
+            category: values.category,
             severity: values.severity,
+            description: values.description,
+            comments: values.comments,
+            status: values.status,
         };
 
         createIncident(incidentData).then((data) => {
@@ -69,7 +75,7 @@ export default function NewIncident() {
     };
 
     if (values.redirect) {
-        return <Navigate to="/incidents" />;
+        return <Navigate to="/incidents/new" />;
     }
 
     return (
@@ -90,6 +96,33 @@ export default function NewIncident() {
                     />
                     <br />
                     <TextField
+                        id="title"
+                        label="Title"
+                        className={classes.textField}
+                        value={values.title}
+                        onChange={handleChange("title")}
+                        margin="normal"
+                    />
+                    <br />
+                    <TextField
+                        id="category"
+                        label="Category"
+                        className={classes.textField}
+                        value={values.category}
+                        onChange={handleChange("category")}
+                        margin="normal"
+                    />
+                    <br />
+                    <TextField
+                        id="severity"
+                        label="Severity"
+                        className={classes.textField}
+                        value={values.severity}
+                        onChange={handleChange("severity")}
+                        margin="normal"
+                    />
+                    <br />
+                    <TextField
                         id="multiline-flexible"
                         label="Description"
                         multiline
@@ -101,11 +134,22 @@ export default function NewIncident() {
                     />
                     <br />
                     <TextField
-                        id="severity"
-                        label="Severity"
+                        id="multiline-flexible"
+                        label="Comments"
+                        multiline
+                        rows="2"
+                        value={values.comments}
+                        onChange={handleChange("comments")}
                         className={classes.textField}
-                        value={values.severity}
-                        onChange={handleChange("severity")}
+                        margin="normal"
+                    />
+                    <br />
+                    <TextField
+                        id="status"
+                        label="Status"
+                        className={classes.textField}
+                        value={values.status}
+                        onChange={handleChange("status")}
                         margin="normal"
                     />
                     <br />
