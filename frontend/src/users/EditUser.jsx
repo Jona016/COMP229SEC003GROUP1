@@ -15,16 +15,31 @@ import { Navigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: 0,
+    margin: "0", 
+    background: "#1bb1d6", 
+    minHeight: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    // marginTop: "70px"
+    alignItems: "center",
+    // justifyContent: "center",
+  },
   card: {
-    maxWidth: 600,
-    margin: 'auto',
-    textAlign: 'center',
-    marginTop: theme.spacing(5),
-    paddingBottom: theme.spacing(2),
+    width: '100%',
+    maxWidth: 500, // Adjust the maximum width of the paper here
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.spacing(1),
+    boxShadow: theme.shadows[5],
+    marginTop: "70px",
   },
   title: {
     margin: theme.spacing(2),
     color: theme.palette.protectedTitle,
+    fontSize: '1.2em',
+    textAlign: 'center'
   },
   error: {
     verticalAlign: 'middle',
@@ -32,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 300,
+    width: 400,
   },
   submit: {
     margin: 'auto',
@@ -114,6 +129,7 @@ export default function EditProfile() {
   }
 
   return (
+    <div className={classes.root}>
     <Card className={classes.card}>
       <CardContent>
         <Typography variant="h6" className={classes.title}>
@@ -169,5 +185,6 @@ export default function EditProfile() {
         </Button>
       </CardActions>
     </Card>
+    </div>
   );
 }

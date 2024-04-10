@@ -13,11 +13,21 @@ import auth from '../lib/auth-helper.js';
 
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: 0,
+    margin: "0", 
+    background: "#1bb1d6", 
+    minHeight: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
   card: {
-    maxWidth: 600,
+    width: '100%',
+    maxWidth: 500,
     margin: 'auto',
     textAlign: 'center',
-    marginTop: theme.spacing(5),
+    marginTop: "70px",
     paddingBottom: theme.spacing(2),
   },
   error: {
@@ -86,7 +96,7 @@ export default function NewIncident() {
 
 
   return (
-    <div>
+    <div className={classes.root}>
       <Card className={classes.card}>
         <CardContent>
           <Typography type="headline" component="h2" className={classes.title}>

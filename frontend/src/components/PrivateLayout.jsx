@@ -19,11 +19,11 @@ const PrivateLayout = ({ children }) => {
       <div>
         <nav>
           <div className='container'>
-            <Link to="/"><img src={Logo} alt="Company Logo" className="logo" width="60px" height="60px" /></Link>
+            <Link to="/users"><img src={Logo} alt="Company Logo" className="logo" width="60px" height="60px" /></Link>
             <Link to="/incidents"> <p>Incident Management System</p></Link>
             <Link to="/incidents">User</Link>
             <Link to="/profile">Profile</Link>
-            <button onClick={handleLogout}>Logout</button>
+            <Link onClick={handleLogout}>Logout</Link>
           </div>
         </nav>
       </div>

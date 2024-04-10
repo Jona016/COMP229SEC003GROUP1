@@ -12,19 +12,40 @@ import { read, update } from './api-incident.js';
 import { Link, useParams, Navigate } from 'react-router-dom';
 import auth from '../lib/auth-helper.js';
 
-const useStyles = makeStyles((theme) => ({
-  card: {
-    margin: 'auto',
-    textAlign: 'center',
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(2),
-    maxWidth: 500,
-    paddingBottom: theme.spacing(2),
+const useStyles = makeStyles((theme) => ({ 
+  root: {
+    padding: 0,
+    margin: "0", 
+    background: "#1bb1d6", 
+    minHeight: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    // marginTop: "70px"
+    alignItems: "center",
+    // justifyContent: "center",
   },
+  card: {
+    width: '100%',
+    maxWidth: 500, // Adjust the maximum width of the paper here
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.spacing(1),
+    boxShadow: theme.shadows[5],
+    marginTop: "70px",
+  },
+  // card: {
+  //   margin: 'auto',
+  //   textAlign: 'center',
+  //   marginTop: theme.spacing(3),
+  //   marginBottom: theme.spacing(2),
+  //   maxWidth: 500,
+  //   paddingBottom: theme.spacing(2),
+  // },
   title: {
     margin: theme.spacing(2),
     color: theme.palette.protectedTitle,
     fontSize: '1.2em',
+    textAlign: 'center'
   },
   error: {
     verticalAlign: 'middle',
@@ -119,7 +140,7 @@ export default function EditIncident() {
   }
 
   return (
-    <div>
+    <div className={classes.root}>
       <Card className={classes.card}>
         <CardContent>
           <Typography type="headline" component="h2" className={classes.title}>

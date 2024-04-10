@@ -16,12 +16,26 @@ import { Navigate, Link } from 'react-router-dom';
 import { listId, remove } from './api-user.js';
 
 const useStyles = makeStyles((theme) => ({
-  root: theme.mixins.gutters({
-    maxWidth: 600,
-    margin: 'auto',
-    padding: theme.spacing(3),
-    marginTop: theme.spacing(5),
-  }),
+  root: {
+    padding: 0,
+    margin: "0", 
+    background: "#1bb1d6", 
+    minHeight: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    // marginTop: "70px"
+    alignItems: "center",
+    // justifyContent: "center",
+  },
+  paper: {
+    width: '100%',
+    maxWidth: 500, // Adjust the maximum width of the paper here
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.spacing(1),
+    boxShadow: theme.shadows[5],
+    marginTop: "70px",
+  },
   title: {
     margin: `${theme.spacing(3)}px 0 ${theme.spacing(3)}px ${theme.spacing(1)}px`,
     color: theme.palette.protectedTitle,
@@ -32,6 +46,11 @@ const useStyles = makeStyles((theme) => ({
   },
   leftIcon: {
     marginRight: '8px',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 400,
   },
 }));
 
@@ -85,12 +104,12 @@ export default function MyProfile() {
   }
 
   return (
-    <div>
-      <Paper className={classes.root} elevation={4}>
+    <div className={classes.root}>
+      <Paper className={classes.paper} elevation={4}>
         <Typography type="title" className={classes.title}>
           User Profile
           <span className={classes.addButton}>
-            <Link to={`/edit/${users._id}`}>
+            <Link to={auth.isAdmin() ? `/admin/edit/${users._id}` : `/edit/${users._id}`}>  
               <IconButton aria-label="Edit" color="primary">
                 <EditIcon />
               </IconButton>
@@ -114,7 +133,7 @@ export default function MyProfile() {
             <ListItemText primary={`Email: ${users && users.email}`} />
           </ListItem>
           <ListItem>
-            <ListItemText primary={`Date Joined: ${users && new Date(users.created).toDateString()}`} />
+            <ListItemText primary={`Date Joined: ${users && new Date(users.dateCreated).toDateString()}`} />
           </ListItem>
         </List>
       </Paper>

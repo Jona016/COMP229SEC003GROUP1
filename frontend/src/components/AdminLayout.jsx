@@ -25,7 +25,7 @@ const PrivateLayout = ({ children }) => {
             <Link to="/admin/users">Users</Link>
             <Link to="/admin/incidents">Incidents</Link>
             <Link to="/admin/profile">Profile</Link>
-            <button onClick={handleLogout}>Logout</button>
+            <Link onClick={handleLogout}>Logout</Link>
           </div>
         </nav>
       </div>

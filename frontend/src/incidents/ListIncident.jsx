@@ -11,6 +11,12 @@ import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import Divider from '@material-ui/core/Divider';
 import { Navigate, Link } from 'react-router-dom';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -20,12 +26,26 @@ import auth from '../lib/auth-helper.js';
 import { list, listByUser, remove } from './api-incident.js';
 
 const useStyles = makeStyles((theme) => ({
-  root: theme.mixins.gutters({
-    maxWidth: 600,
-    margin: 'auto',
-    padding: theme.spacing(3),
-    marginTop: theme.spacing(5),
-  }),
+  root: {
+    padding: 0,
+    margin: "0", 
+    background: "#1bb1d6", 
+    minHeight: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    // marginTop: "70px"
+    alignItems: "center",
+    // justifyContent: "center",
+  },
+  paper: {
+    width: '100%',
+    maxWidth: 1500, // Adjust the maximum width of the paper here
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.spacing(1),
+    boxShadow: theme.shadows[5],
+    marginTop: "70px",
+  },
   title: {
     margin: `${theme.spacing(3)}px 0 ${theme.spacing(3)}px ${theme.spacing(1)}px`,
     color: theme.palette.protectedTitle,
@@ -102,8 +122,8 @@ export default function MyIncidents() {
   }
 
   return (
-    <div>
-      <Paper className={classes.root} elevation={4}>
+    <div className={classes.root}>
+      <Paper elevation={4} className={classes.paper}>
         <Typography type="title" className={classes.title}>
           Your Incidents
           <span className={classes.addButton}>
@@ -114,7 +134,56 @@ export default function MyIncidents() {
             </Link>
           </span>
         </Typography>
-        <List dense>
+
+        <TableContainer>
+          <Table aria-label="incidents table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Date Created</TableCell>
+                <TableCell>Incident Number</TableCell>
+                <TableCell>Title</TableCell>
+                <TableCell>Description</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>Severity</TableCell>
+                <TableCell>Comments</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Action</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {incidents.map((incident, index) => (
+                <TableRow key={index}>
+                  <TableCell>{new Date(incident.dateCreated).toDateString()}</TableCell>
+                  <TableCell>{incident._id}</TableCell>
+                  <TableCell>{incident.title}</TableCell>
+                  <TableCell>{incident.description}</TableCell>
+                  <TableCell>{incident.category}</TableCell>
+                  <TableCell>{incident.severity}</TableCell>
+                  <TableCell>{incident.comments}</TableCell>
+                  <TableCell>{incident.status}</TableCell>
+                  <TableCell>
+                    <IconButton
+                      aria-label="delete"
+                      color="secondary"
+                      onClick={() => deleteIncident(incident)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                    <IconButton
+                      aria-label="edit"
+                      color="primary"
+                      component={Link}
+                      to={auth.isAdmin() ? `/admin/incidents` : `/incidents`}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {/* <List dense>
           {incidents.map((incident, i) => (
             <span key={i}>
               <ListItem button>
@@ -171,7 +240,7 @@ export default function MyIncidents() {
               <Divider />
             </span>
           ))}
-        </List>
+        </List> */}
       </Paper>
     </div>
   );
