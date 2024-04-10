@@ -1,12 +1,12 @@
 import User from '../models/userModel.js'
 import extend from 'lodash/extend.js'
 import errorHandler from './errorController.js'
-import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 
 const create = async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        await user.save()
+        // const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const user = new User({
           name: req.body.name,
           email: req.body.email,

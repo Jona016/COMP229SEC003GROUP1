@@ -1,7 +1,6 @@
 import Incident from '../models/incidentModel.js'
 import extend from 'lodash/extend.js'
 import errorHandler from './errorController.js'
-import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
 import authController from './authController.js';

@@ -208,34 +208,34 @@ export default function MyIncidents() {
                     </React.Fragment>
                   }
                 />
-                {auth.isAuthenticated().user && (
-                  <ListItemSecondaryAction>
-                    {((auth.isAdmin() ||
-                      incident.reportedBy ===
-                        auth.isAuthenticated().user._id) && (
-                      <IconButton
-                        aria-label="Delete"
-                        color="secondary"
-                        onClick={() => deleteIncident(incident)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    ))}
-                    {((auth.isAdmin() && (
-                      <Link to={`/admin/incidents/edit/${incident._id}`}>
-                        <IconButton aria-label="Edit" color="primary">
-                          <EditIcon />
+                  {auth.isAuthenticated().user && (
+                    <ListItemSecondaryAction>
+                      {((auth.isAdmin() ||
+                        incident.reportedBy ===
+                          auth.isAuthenticated().user._id) && (
+                        <IconButton
+                          aria-label="Delete"
+                          color="secondary"
+                          onClick={() => deleteIncident(incident)}
+                        >
+                          <DeleteIcon />
                         </IconButton>
-                      </Link>
-                    )) || (
-                      <Link to={`/incidents/edit/${incident._id}`}>
-                        <IconButton aria-label="Edit" color="primary">
-                          <EditIcon />
-                        </IconButton>
-                      </Link>
-                    ))}
-                  </ListItemSecondaryAction>
-                )}
+                      ))}
+                      {((auth.isAdmin() && (
+                        <Link to={`/admin/incidents/edit/${incident._id}`}>
+                          <IconButton aria-label="Edit" color="primary">
+                            <EditIcon />
+                          </IconButton>
+                        </Link>
+                      )) || (
+                        <Link to={`/incidents/edit/${incident._id}`}>
+                          <IconButton aria-label="Edit" color="primary">
+                            <EditIcon />
+                          </IconButton>
+                        </Link>
+                      ))}
+                    </ListItemSecondaryAction>
+                  )}
               </ListItem>
               <Divider />
             </span>
