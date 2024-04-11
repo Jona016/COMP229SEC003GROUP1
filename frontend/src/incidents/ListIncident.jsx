@@ -24,17 +24,23 @@ import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import auth from '../lib/auth-helper.js';
 import { list, listByUser, remove } from './api-incident.js';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogActions from '@material-ui/core/DialogActions';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: 0,
-    margin: "0", 
-    background: "#1bb1d6", 
-    minHeight: "100vh",
-    display: "flex",
-    flexDirection: "column",
+    margin: '0',
+    background: '#1bb1d6',
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
     // marginTop: "70px"
-    alignItems: "center",
+    alignItems: 'center',
     // justifyContent: "center",
   },
   paper: {
@@ -44,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     borderRadius: theme.spacing(1),
     boxShadow: theme.shadows[5],
-    marginTop: "70px",
+    marginTop: '70px',
   },
   title: {
     margin: `${theme.spacing(3)}px 0 ${theme.spacing(3)}px ${theme.spacing(1)}px`,
@@ -63,6 +69,9 @@ export default function MyIncidents() {
   const classes = useStyles();
   const [incidents, setIncidents] = useState([]);
   const [redirectToSignin, setRedirectToSignin] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [incidentToDelete, setIncidentToDelete] = useState(null);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -96,16 +105,19 @@ export default function MyIncidents() {
     try {
       const jwt = auth.isAuthenticated();
       const data = await remove(
-        { incidentId: incident._id },
-        { t: jwt.token }
-      );
+        // { incidentId: incident._id },
+        { incidentId: incidentToDelete._id }, { t: jwt.token });
       if (data.error) {
         console.error(data.error);
       } else {
         const updatedIncidents = incidents.filter(
-          (item) => item._id !== incident._id
+          // (item) => item._id !== incident._id
+          (item) => item._id !== incidentToDelete._id
         );
         setIncidents(updatedIncidents);
+        setIncidentToDelete(null);
+        setDialogOpen(false);
+
       }
     } catch (error) {
       console.error(error);
@@ -127,7 +139,9 @@ export default function MyIncidents() {
         <Typography type="title" className={classes.title}>
           Your Incidents
           <span className={classes.addButton}>
-            <Link to={auth.isAdmin() ? `/admin/incidents/new` : `/incidents/new`}>
+            <Link
+              to={auth.isAdmin() ? `/admin/incidents/new` : `/incidents/new`}
+            >
               <Button color="primary" variant="contained">
                 <AddIcon className={classes.leftIcon} /> New Incident
               </Button>
@@ -153,7 +167,9 @@ export default function MyIncidents() {
             <TableBody>
               {incidents.map((incident, index) => (
                 <TableRow key={index}>
-                  <TableCell>{new Date(incident.dateCreated).toDateString()}</TableCell>
+                  <TableCell>
+                    {new Date(incident.dateCreated).toDateString()}
+                  </TableCell>
                   <TableCell>{incident._id}</TableCell>
                   <TableCell>{incident.title}</TableCell>
                   <TableCell>{incident.description}</TableCell>
@@ -165,83 +181,50 @@ export default function MyIncidents() {
                     <IconButton
                       aria-label="delete"
                       color="secondary"
-                      onClick={() => deleteIncident(incident)}
+                      // onClick={() => deleteIncident(incident)}
+                      onClick={() => {
+                        setIncidentToDelete(incident);
+                        setDialogOpen(true);}}
+
                     >
                       <DeleteIcon />
                     </IconButton>
-                    <IconButton
-                      aria-label="edit"
-                      color="primary"
-                      component={Link}
-                      to={auth.isAdmin() ? `/admin/incidents` : `/incidents`}
-                    >
-                      <EditIcon />
-                    </IconButton>
+                    {auth.isAdmin() ? (
+                      <Link to={`/admin/incidents/edit/${incident._id}`}>
+                        <IconButton aria-label="edit" color="primary">
+                          <EditIcon />
+                        </IconButton>
+                      </Link>
+                    ) : (
+                      <Link to={`/incidents/edit/${incident._id}`}>
+                        <IconButton aria-label="edit" color="primary">
+                          <EditIcon />
+                        </IconButton>
+                      </Link>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-        {/* <List dense>
-          {incidents.map((incident, i) => (
-            <span key={i}>
-              <ListItem button>
-                <ListItemAvatar>
-                  <Avatar>
-                    <Icon>info</Icon>
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={incident.title}
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        color="textPrimary"
-                      >
-                        {incident.category} | {incident.severity}
-                      </Typography>
-                      <br />
-                      {incident.description}
-                    </React.Fragment>
-                  }
-                />
-                  {auth.isAuthenticated().user && (
-                    <ListItemSecondaryAction>
-                      {((auth.isAdmin() ||
-                        incident.reportedBy ===
-                          auth.isAuthenticated().user._id) && (
-                        <IconButton
-                          aria-label="Delete"
-                          color="secondary"
-                          onClick={() => deleteIncident(incident)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      ))}
-                      {((auth.isAdmin() && (
-                        <Link to={`/admin/incidents/edit/${incident._id}`}>
-                          <IconButton aria-label="Edit" color="primary">
-                            <EditIcon />
-                          </IconButton>
-                        </Link>
-                      )) || (
-                        <Link to={`/incidents/edit/${incident._id}`}>
-                          <IconButton aria-label="Edit" color="primary">
-                            <EditIcon />
-                          </IconButton>
-                        </Link>
-                      ))}
-                    </ListItemSecondaryAction>
-                  )}
-              </ListItem>
-              <Divider />
-            </span>
-          ))}
-        </List> */}
       </Paper>
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this incident?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={deleteIncident} color="secondary" autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
